@@ -78,6 +78,39 @@ app.get('/api/v1/tours/:id', (req, res) => {
   });
 });
 
+// patch & delete method for understanding how it works, in realword we work with db not files, if we do with files, have to implements many code, let's skip these for now
+app.patch('/api/v1/tours/:id', (req, res) => {
+
+    if((req.params.id * 1) > tourData.length) {
+        return res.status(404).json({
+            status: "failed",
+            message: "Not found"
+        });
+    }
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            tour: "<Updated tour here.."
+        }
+    })
+});
+
+app.delete('/api/v1/tours/:id', (req, res) => {
+
+    if((req.params.id * 1) > tourData.length) {
+        return res.status(404).json({
+            status: "failed",
+            message: "Not found"
+        });
+    }
+
+    res.status(204).json({
+        status: "success",
+        data: null
+    });
+});
+
 app.listen(port, () => {
   console.log('App running on port ' + '127.0.0.1:' + port);
 });
