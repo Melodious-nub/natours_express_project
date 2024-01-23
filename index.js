@@ -4,7 +4,15 @@ const fs = require('fs');
 const port = 3000;
 
 // middlewere for req.body as json format
+// important tip is call middlewere always top on the code
 app.use(express.json());
+
+// custom middlewere it is must to pass next() on middlewere, otherwise function is not completed
+app.use((req, res, next) => {
+  // here you can create any req property and send the data from here
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 // this is ssyncronous call for read data, and it is a top level code
 const tourData = JSON.parse(
@@ -16,6 +24,8 @@ const getAllTour = (req, res) => {
     res.status(200).json({
       status: 'success',
       results: tourData.length,
+      // last time is added to our res from middlewere
+      lastRequestTime: req.requestTime,
       data: {
         tours: tourData
       }
@@ -31,6 +41,7 @@ const postAllTour = (req, res) => {
     fs.writeFile('./dev-data/data/tours-simple.json', JSON.stringify(tourData), () => {
       res.status(201).json({
         status: "success",
+        lastRequestTime: req.requestTime,
         data: {
           tours: newTour
         }
@@ -42,12 +53,14 @@ const updateTour = (req, res) => {
     if((req.params.id * 1) > tourData.length) {
         return res.status(404).json({
             status: "failed",
+            lastRequestTime: req.requestTime,
             message: "Not found"
         });
     }
 
     res.status(200).json({
         status: "success",
+        lastRequestTime: req.requestTime,
         data: {
             tour: "<Updated tour here.."
         }
@@ -66,12 +79,14 @@ const getTourById = (req, res) => {
     if (!tourFiltered) {
       return res.status(404).json({
         status: "failed",
+        lastRequestTime: req.requestTime,
         message: "Not found"
       });
     }
   
     res.status(200).json({
       status: "success",
+      lastRequestTime: req.requestTime,
       data: {
         tour: tourFiltered
       }
@@ -82,12 +97,14 @@ const deleteTour = (req, res) => {
     if((req.params.id * 1) > tourData.length) {
         return res.status(404).json({
             status: "failed",
+            lastRequestTime: req.requestTime,
             message: "Not found"
         });
     }
 
     res.status(204).json({
         status: "success",
+        lastRequestTime: req.requestTime,
         data: null
     });
 }
