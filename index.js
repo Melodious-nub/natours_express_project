@@ -114,6 +114,42 @@ const deleteTour = (req, res) => {
     });
 }
 
+// route handlers for users
+const getAllUsers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not defined'
+  });
+};
+
+const postUsers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not defined'
+  });
+};
+
+const getUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not defined'
+  });
+};
+
+const updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not defined'
+  });
+};
+
+const deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'this route is not defined'
+  });
+};
+
 // these are commented out because app.route serve as same purpose
 // for getting all tours
 // app.get('/api/v1/tours', getAllTour);
@@ -129,6 +165,10 @@ const deleteTour = (req, res) => {
 // more simple and best way to hangle routes. SO we can change single route for multiple purposes
 app.route('/api/v1/tours').get(getAllTour).post(postAllTour);
 app.route('/api/v1/tours/:id').get(getTourById).patch(updateTour).delete(deleteTour);
+
+// for users routes
+app.route('/api/v1/users').get(getAllUsers).post(postUsers);
+app.route('/api/v1/users/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 // delete commneted out with out refactor code
 // app.delete('/api/v1/tours/:id', (req, res) => {
