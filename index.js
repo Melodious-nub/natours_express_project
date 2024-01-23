@@ -162,13 +162,23 @@ const deleteUser = (req, res) => {
 // delete tour data route
 // app.delete('/api/v1/tours/:id', deleteTour);
 
+// -----------------------------------------------------------------------------------------------
+// router midelewere
+const tourRouter = express.Router();
+const userRouter = express.Router();
+
 // more simple and best way to hangle routes. SO we can change single route for multiple purposes
-app.route('/api/v1/tours').get(getAllTour).post(postAllTour);
-app.route('/api/v1/tours/:id').get(getTourById).patch(updateTour).delete(deleteTour);
+tourRouter.route('/').get(getAllTour).post(postAllTour);
+tourRouter.route('/:id').get(getTourById).patch(updateTour).delete(deleteTour);
 
 // for users routes
-app.route('/api/v1/users').get(getAllUsers).post(postUsers);
-app.route('/api/v1/users/:id').get(getUser).patch(updateUser).delete(deleteUser);
+userRouter.route('').get(getAllUsers).post(postUsers);
+userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+
+// route mounting for separting files 1st step
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
+// --------------------------------------------------------------------------------------------------
 
 // delete commneted out with out refactor code
 // app.delete('/api/v1/tours/:id', (req, res) => {
