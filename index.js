@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
+const morgan = require('morgan');
 const port = 3000;
 
 // middlewere for req.body as json format
 // important tip is call middlewere always top on the code
 app.use(express.json());
+
+// third party middlewere import (morgan) for development purposes
+app.use(morgan('dev'));
 
 // custom middlewere it is must to pass next() on middlewere, otherwise function is not completed
 app.use((req, res, next) => {
@@ -20,6 +24,7 @@ const tourData = JSON.parse(
 );
 
 // refactoring code with more readable for all api calls
+// all route handlers
 const getAllTour = (req, res) => {
     res.status(200).json({
       status: 'success',
