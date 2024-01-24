@@ -5,6 +5,19 @@ const tourData = JSON.parse(
     fs.readFileSync('./dev-data/data/tours-simple.json')
 );
 
+// param middlewere for checking id before exicute apis for error check
+exports.checkId = (req, res, next, val) => {
+    console.log(`The id is: ${val}`);
+    if ((req.params.id * 1) > tourData.length) {
+        return res.status(404).json({
+            status: "failed",
+            lastRequestTime: req.requestTime,
+            message: "Not found"
+        });
+    }
+    next();
+}
+
 // all tour handlers
 exports.getAllTour = (req, res) => {
     res.status(200).json({
@@ -36,14 +49,6 @@ exports.postAllTour = (req, res) => {
 }
 
 exports.updateTour = (req, res) => {
-    if ((req.params.id * 1) > tourData.length) {
-        return res.status(404).json({
-            status: "failed",
-            lastRequestTime: req.requestTime,
-            message: "Not found"
-        });
-    }
-
     res.status(200).json({
         status: "success",
         lastRequestTime: req.requestTime,
@@ -62,13 +67,13 @@ exports.getTourById = (req, res) => {
     // validation if id is not in the db
     // we can achiver it by many way as example here is two possible solution
     // if (id > tourData.length) {
-    if (!tourFiltered) {
-        return res.status(404).json({
-            status: "failed",
-            lastRequestTime: req.requestTime,
-            message: "Not found"
-        });
-    }
+    // if (!tourFiltered) {
+    //     return res.status(404).json({
+    //         status: "failed",
+    //         lastRequestTime: req.requestTime,
+    //         message: "Not found"
+    //     });
+    // }
 
     res.status(200).json({
         status: "success",
@@ -80,14 +85,6 @@ exports.getTourById = (req, res) => {
 }
 
 exports.deleteTour = (req, res) => {
-    if ((req.params.id * 1) > tourData.length) {
-        return res.status(404).json({
-            status: "failed",
-            lastRequestTime: req.requestTime,
-            message: "Not found"
-        });
-    }
-
     res.status(204).json({
         status: "success",
         lastRequestTime: req.requestTime,

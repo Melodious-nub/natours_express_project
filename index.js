@@ -2,10 +2,6 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 
-// import routes
-const tourRouter = require('./routes/tourRoutes');
-const userRouter = require('./routes/userRoutes');
-
 // middlewere for req.body as json format
 // important tip is call middlewere always top on the code
 app.use(express.json());
@@ -19,6 +15,10 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
+
+// import routes
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes');
 
 // route mounting for separting files 1st step
 app.use('/api/v1/tours', tourRouter);
