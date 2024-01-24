@@ -9,6 +9,9 @@ app.use(express.json());
 // third party middlewere import (morgan) for development purposes
 app.use(morgan('dev'));
 
+// static file serve on server as frontend
+app.use(express.static(`${__dirname}/public`));
+
 // custom middlewere it is must to pass next() on middlewere, otherwise function is not completed
 app.use((req, res, next) => {
   // here you can create any req property and send the data from here
