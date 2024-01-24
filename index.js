@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const port = 3000;
 
 // import routes
 const tourRouter = require('./routes/tourRoutes');
@@ -40,6 +39,4 @@ app.use('/api/v1/users', userRouter);
 //     });
 // });
 
-app.listen(port, () => {
-  console.log('App running on port ' + '127.0.0.1:' + port);
-});
+module.exports = app;
