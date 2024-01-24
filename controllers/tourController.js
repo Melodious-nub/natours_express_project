@@ -18,6 +18,17 @@ exports.checkId = (req, res, next, val) => {
     next();
 }
 
+// middlewere for check if req.body is exist
+exports.checkBody = (req, res, next) => {
+    if(!req.body.name || !req.body.price) {
+        return res.status(400).json({
+            status: 'failed',
+            message: 'Bad request'
+        })
+    }
+    next();
+}
+
 // all tour handlers
 exports.getAllTour = (req, res) => {
     res.status(200).json({
