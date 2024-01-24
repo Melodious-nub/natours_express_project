@@ -4,11 +4,13 @@
   "description": "Learning express",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon server.js"
   },
   "author": "Shawon Talukder",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.0",
     "express": "^4.18.2",
     "morgan": "^1.10.0"
   }

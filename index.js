@@ -7,7 +7,10 @@ const morgan = require('morgan');
 app.use(express.json());
 
 // third party middlewere import (morgan) for development purposes
-app.use(morgan('dev'));
+// logic added if it is on development then show the log
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 // static file serve on server as frontend
 app.use(express.static(`${__dirname}/public`));
